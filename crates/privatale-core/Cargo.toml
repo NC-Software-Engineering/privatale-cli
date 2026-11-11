@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Copyright (C) 2026 NC Software Engineering
+#
+# This file is part of privatale-cli.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, version 3.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+[package]
+name = "privatale-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+hpke = { version = "=0.15.1", default-features = false, features = ["alloc", "x25519", "chacha"] }
+argon2 = { version = "=0.6.0", default-features = false, features = ["alloc", "zeroize"] }
+rand_core = { version = "=0.10.1", default-features = false }
+hkdf = { version = "=0.13.0", default-features = false }
+sha2 = { version = "=0.11.1", default-features = false, features = ["zeroize"] }
+chacha20poly1305 = { version = "=0.11.0", default-features = false, features = ["alloc", "zeroize"] }
+zeroize = { version = "=1.9.1", features = ["alloc"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+getrandom = { version = "=0.4.3", default-features = false }
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[[example]]
+name = "framing-vectors"
+path = "examples/framing-vectors.rs"
+crate-type = ["cdylib"]
+test = false
+
+[[example]]
+name = "browser-bridge"
+path = "examples/browser-bridge.rs"
+crate-type = ["cdylib"]
+test = false
+
+[[example]]
+name = "browser-v1"
+path = "examples/browser-v1.rs"
+crate-type = ["cdylib"]
+test = false
